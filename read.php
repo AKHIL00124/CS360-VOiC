@@ -94,7 +94,7 @@ $row = mysqli_fetch_array($query);
 
  
     <div class="container" style="padding-bottom: 150px; margin-top: 0px; margin-bottom: 100px; border-radius: 20px; ">        
-        <form action="update-doc.php" method="post">
+        <form action="home.php" method="post">
             <div>
                 <div class="container heading">
                     <h3 style="text-align: center;"></h3>

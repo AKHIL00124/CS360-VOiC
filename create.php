@@ -37,6 +37,10 @@ if (isset($_SESSION["user_id"])) {
         .ck-editor__editable[role="textbox"] {
             min-height: 700px;
         }
+        form {
+            padding: 50px;
+        }
+        
     </style>
 </head>
 <body>
@@ -52,10 +56,7 @@ if (isset($_SESSION["user_id"])) {
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt=""> </a>
                     <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
                 
-                <div class="search-box">
-                    <input class="search-txt" type="text" name="Searchbox" placeholder="Type to Search">
-                    <a class="search-btn" href="#"><i class="bi bi-search"></i></a>
-                </div>
+
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">

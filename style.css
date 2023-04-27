@@ -228,3 +228,8 @@ main{
    min-height: 600px;
    height: 800px;
 }
+
+.search-opt{
+    padding: none !important;
+    margin: none;
+}
