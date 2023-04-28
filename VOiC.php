@@ -74,7 +74,7 @@ if (isset($_SESSION["user_id"])) {
     
     
     <div class="container">
-        <h1>Home Page</h1>
+        <h1>Search Page</h1>
     </div>
     <div class="container" style="padding-bottom: 150px; margin-top: 100px; margin-bottom: 100px; border-radius: 20px; background-color: #73db9038;">
         <form action="" method="post">
@@ -553,7 +553,7 @@ if (isset($_SESSION["user_id"])) {
             <br>
             
         </form>
-        <input class="submit" type="submit" value="Submit">
+        <input class="submit" type="submit" value="SEARCH">
     </div>
 
     

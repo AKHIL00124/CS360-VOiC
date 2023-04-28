@@ -1,7 +1,9 @@
 <?php
 session_start();
 if (isset($_SESSION["user_id"])) {
-    $mysqli = require __DIR__ . "/database.php";
+   $mysqli = require __DIR__ . "/database.php";
+
+//    $mysqli = require __DIR__ . "/database.php";
     $sql = "SELECT * FROM user
             WHERE id = {$_SESSION["user_id"]}";
     $result = $mysqli->query($sql);
@@ -77,12 +79,12 @@ if(isset($_GET['delid'])) {
     <header>
         <nav class="navbar navbar-expand-md  navbar-light">
             <div class="container">
-                <a href="VOiC.php" class="navbar-logo"></a>
+                <a href="home.php" class="navbar-logo"></a>
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
-                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
+                    <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
                 
                 <div class="search-box">
-                    <form action="search.php" method="post"  class="search-opt" style="all: unset;padding: none !important;" >
+                    <form  method="post"  class="search-opt" style="all: unset;padding: none !important;" >
                         <input class="search-txt1" type="text" name="Searchbox" placeholder="Type to Search">
                         <button type="submit" name="submit-search" class="search-btn1" style="border: none;    "><i class="bi bi-search"></i></button>
                     </form>
@@ -119,15 +121,22 @@ if(isset($_GET['delid'])) {
        
 <?php
 if (isset($_POST['submit-search'])) {
-
     $search = $_POST['search'];
 
-//    $sql = "SELECT * FROM `documents` WHERE title LIKE '%".$search."%' OR title LIKE '%".$search."%' author LIKE '%".$search."%' description LIKE '%".$search."%' createdOn LIKE '%".$search."%' ";
-
-}
-$result = $mysqli->query("SELECT * FROM `documents` WHERE title LIKE '%$search%' OR title LIKE '%$search%' author LIKE '%$search%' description LIKE '%$search%' createdOn LIKE '%$search%' ");
-if (mysqli_num_rows($result) > 0) {
-    while($row = mysqli_fetch_assoc($result)){     
+    $sql = "SELECT * FROM `documents` WHERE title LIKE '%".$search."%' OR author LIKE '%".$search."%' OR description LIKE '%".$search."%' OR createdOn LIKE '%".$search."%' ";
+    $result = $mysqli->query($sql);
+    if (mysqli_num_rows($result) > 0) {
+        $queryResult = mysqli_num_rows($result);
+    
+        ?>
+        <div class="container" style="padding-bottom: 20px; padding-left: 40px " >
+         <?php
+            echo "There are " . $queryResult . " results";
+          ?>
+        </div>
+       <?php
+        
+        while($row = mysqli_fetch_assoc($result)){     
 ?>                         
         
         <div class="container" style="padding: 30px; border: #AA96DA solid; border-radius: 20px; background-color: #73db9038; margin-bottom: 50px ">    
@@ -148,10 +157,11 @@ if (mysqli_num_rows($result) > 0) {
             </div>
         </div>    
 <?php            
-    }
-} else {
-    echo "No results found.";
-}           
+        }
+    } else {
+        echo "No results found.";
+    }  
+}
 ?>               
     </div>
     

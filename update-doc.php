@@ -19,7 +19,16 @@ if (mysqli_connect_errno()) {
     die("Connection error: " . mysqli_connect_error());
 }
 
-//$sql = "UPDATE documents SET `title`='$title',`description`='$description',`author`='$author',`createdOn`='$createdOn' WHERE id = '$id' ";
+$sql = "UPDATE documents SET title='title',description='$description',author='$author',createdOn='$createdOn' WHERE id = '$id' ";
+
+if (mysqli_query($conn, $sql)) {
+  header("Location: home.php?success=1");
+exit;
+} else {
+ header("Location: home.php?success=0");
+exit;
+}
+
 
 //$query = mysqli_query($conn, "UPDATE documents SET `title`='$title',`description`='$description',`author`='$author',`createdOn`='$createdOn' WHERE id = '$id' ");
 //
@@ -32,17 +41,18 @@ if (mysqli_connect_errno()) {
 //    exit;
 //}
 
-$sql = "UPDATE `documents` SET `title`=?, `description`=?, `author`=?, `createdOn`=? WHERE id=?";
+//$sql = "UPDATE `documents` SET `title`=?, `description`=?, `author`=?, `createdOn`=? WHERE id=?";
+//
+//
+//
+//$stmt = mysqli_stmt_init($conn);
 
-$stmt = mysqli_stmt_init($conn);
+//if ( ! mysqli_stmt_prepare($stmt, $sql)) {
+//    die (mysqli_error($conn));
+//}
+//
+//mysqli_stmt_bind_param($stmt, "ssssi", $title, $description, $author, $createdOn, $id);
+//
+//mysqli_stmt_execute($stmt);
 
-if ( ! mysqli_stmt_prepare($stmt, $sql)) {
-    die (mysqli_error($conn));
-}
 
-mysqli_stmt_bind_param($stmt, "ssssi", $title, $description, $author, $createdOn, $id);
-
-mysqli_stmt_execute($stmt);
-
-header("Location: home.php?success=1");
-exit;
