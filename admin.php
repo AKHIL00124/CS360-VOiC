@@ -1,15 +1,19 @@
 <?php
 session_start();
-if (isset($_SESSION["user_id"])) {
-   $mysqli = require __DIR__ . "/database.php";
-
-//    $mysqli = require __DIR__ . "/database.php";
+if (isset($_SESSION["user_id"])  && ($_SESSION["role"]!= '2' )) {    
+    if ( $_SESSION["role"] != '2'  ) {
+                header("Location: home.php");
+                die();
+    }      
+    $mysqli = require __DIR__ . "/database.php";
     $sql = "SELECT * FROM user
-            WHERE id = {$_SESSION["user_id"]}";
-    $result = $mysqli->query($sql);
+            WHERE id = {$_SESSION["user_id"]}";           
+    $result = $mysqli->query($sql);    
     $user = $result->fetch_assoc();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +30,8 @@ if (isset($_SESSION["user_id"])) {
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png">
-    <title>VOiC Search</title>
+    <title>Admin</title>
+
     <style>
         .read {
             float: right!important;  
@@ -61,6 +66,7 @@ if (isset($_SESSION["user_id"])) {
     </style>
     
 <?php    
+     
 if(isset($_GET['delid'])) {    
         $id = $_GET['delid'];       
         $sql_delete = "DELETE FROM `documents` WHERE id = '$id' ";
@@ -72,30 +78,46 @@ if(isset($_GET['delid'])) {
         }
 }
 ?>  
+    
 </head>
 <body>
+     
 <?php if (isset($user)): ?> 
+
     <!-- navbar -->
     <header>
-        <nav class="navbar navbar-expand-md  navbar-light">
+        <nav class="navbar navbar-expand-lg  navbar-light">
             <div class="container">
-                <a href="home.php" class="navbar-logo">
+                <a href="VOiC.php" class="navbar-logo">
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
-                    </a>
-                    <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
+                </a>
                 
+                 <?php if($_SESSION["role"] == 2) {  ?>
+                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin</a>
+                <?php } ?>   
+                <?php if($_SESSION["role"] == 1) {  ?>
+                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px; font-size: 18px;"> Virtual Office in Cloud</a>
+                <?php } ?>   
 
+<!--                <div class="search-box">
+                    <form action="search.php" method="post"  class="search-opt" style="all: unset;padding: none !important;" >
+                        <input class="search-txt1" type="text" name="search" placeholder="Type to Search">
+                        <button type="submit" name="submit-search" class="search-btn1" style="border: none;    "><i class="bi bi-search"></i></button>
+                    </form>
+                    
+                </div>-->
+                    
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item active">
+                            <a href="home.php" class="nav-link">Manage Docs</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="create.php" class="nav-link">Create</a>
+                        </li>
+                        <li class="nav-item active">
                             <a href="VOiC.php" class="nav-link">Search</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="home.php" class="nav-link"> Home </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="contact.html" class="nav-link"> Contact </a>
                         </li>
                         <li class="nav-item active">
                             <a href="logout.php" class="nav-link"> Log-out </a>
@@ -107,47 +129,20 @@ if(isset($_GET['delid'])) {
     </header>
     <!-- Navbar-End -->
     
+    
     <div class="container">
-        <h1>Search Page</h1>
+        <h1>Manage Users</h1>
     </div>
+
     <div class="container" style="padding-bottom: 150px; margin-top: 100px; margin-bottom: 100px; border-radius: 20px; padding-left: 140px; padding-right: 140px">
-        
-        
-       
+
+            
 <?php
-if (isset($_POST['search'])) {
-    $todaydate   = date('Y-m-d', strtotime($_POST['todaydate']));
-    $ChildName   = $_POST['ChildName'];
-    $ChildState   = $_POST['ChildState'];
-    $Parent1Name   = $_POST['Parent1Name'];
-    $ChildStayPre   = $_POST['ChildStayPre'];
-    $Parent1State   = $_POST['Parent1State'];
-    $CaseDate   = date('Y-m-d', strtotime($_POST['CaseDate']));
-    $CaseState   = $_POST['CaseState'];
-    $ChangeState   = $_POST['ChangeState'];
-    $Parent2Name   = $_POST['Parent2Name'];
-    $CaseStay   = $_POST['CaseStay'];
-    $Parent2State   = $_POST['Parent2State'];
-
-    $sql = "SELECT * FROM `documents` WHERE todaydate LIKE '%".$todaydate."%' AND ChildName LIKE '%".$ChildName."%' AND ChildState LIKE '%".$ChildState."%' AND Parent1Name LIKE '%".$Parent1Name."%'  "
-            . " AND Parent1State LIKE '%".$Parent1State."%' AND ChildStayPre LIKE '%".$ChildStayPre."%' AND CaseDate LIKE '%".$CaseDate."%' AND CaseState LIKE '%".$CaseState."%' AND ChangeState LIKE '%".$ChangeState."%' "
-            . "AND CaseStay LIKE '%".$CaseStay."%' AND Parent2Name LIKE '%".$Parent2Name."%' AND Parent2State LIKE '%".$Parent2State."%'  ";
-    
-    $result = $mysqli->query($sql);
-    if (mysqli_num_rows($result) > 0) {
-        $queryResult = mysqli_num_rows($result);
-    
-        ?>
-        <div class="container" style="padding-bottom: 20px; padding-left: 40px " >
-         <?php
-            echo "There are " . $queryResult . " results";
-          ?>
-        </div>
-       <?php
-        
-        while($row = mysqli_fetch_assoc($result)){     
-?>                         
-
+$result = $mysqli->query("SELECT * FROM `documents`");
+if (mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_assoc($result)){     
+?>
+                
         <div class="container" style="padding: 30px; border: #AA96DA solid; border-radius: 20px; background-color: #73db9038; margin-bottom: 50px ">    
             <div class="row" style="  ">
               <div class="col-sm-8" >
@@ -156,26 +151,31 @@ if (isset($_POST['search'])) {
                   <p>Writen on <?php echo $row['createdOn'] ?>  </p>
                   <p class="text-right"> By <?php  echo $row['author'] ?> </p> 
               </div>
+
               <div class="col-sm-4" >
                   <a href='read.php?rid=<?php echo $row['id']; ?>' class="btn btn-outline-success mr-2 btn-sm float-right read" >READ</a><br><br>
                   <a href='update.php?uid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>
+<!--                  <a href='home.php?aid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>-->
+               <?php if($_SESSION["role"] == 2) {  ?>
                   <a href='home.php?delid=<?php echo $row['id']; ?>' class="btn btn-outline-danger mr-2 btn-sm float-right read" style=" float: right!important;">DELETE</a><br><br>               
+               <?php } ?>
               </div>
             </div>
         </div>    
-<?php            
-        }
-    } else {
-        echo "No results found.";
-    }  
-}
+<?php        
+            
+    }
+} else {
+    echo "No results found.";
+}           
 ?>               
-    </div>
-    
+             
+        
 
-    
+    </div>
+
     <?php else: ?>
-    <header>
+        <header>
         <nav class="navbar navbar-expand-md  navbar-light">
             <div class="container">
                 <a href="Log-In.php" class="navbar-logo">                 </a>
@@ -194,12 +194,13 @@ if (isset($_POST['search'])) {
                 </div>
             </div>
         </nav>
-    </header>   
-    <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>        
+    </header>
+        
+    <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>
+        
     <?php endif; ?>
 
-<!--    footer-->
-    <footer class="bg-light text-center text-lg-start" style="margin-top: 350px; bottom: 0;">
+    <footer class="bg-light text-center text-lg-start" style="margin-top: 200px; bottom: 0;">
   <div class="text-center p-3" style="background-color: #7ddf99a5;; ">
     © 2023 Copyright
     <a class="text-dark" href="https://github.com/AkhilKarri2002">Created by Akhil Karri</a>

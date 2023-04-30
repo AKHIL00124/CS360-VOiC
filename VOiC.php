@@ -42,8 +42,9 @@ if (isset($_SESSION["user_id"])) {
     <header>
         <nav class="navbar navbar-expand-md  navbar-light">
             <div class="container">
-                <a href="home.php" class="navbar-logo"></a>
+                <a href="home.php" class="navbar-logo">
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
+                </a>
                     <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
                 
                 <div class="search-box">
@@ -57,7 +58,7 @@ if (isset($_SESSION["user_id"])) {
                             <a href="create.php" class="nav-link">Create</a>
                         </li>
                         <li class="nav-item active">
-                            <a href="#" class="nav-link"> About </a>
+                            <a href="home.php" class="nav-link"> Home </a>
                         </li>
                         <li class="nav-item active">
                             <a href="contact.html" class="nav-link"> Contact </a>

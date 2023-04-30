@@ -64,7 +64,7 @@ if (isset($_SESSION["user_id"])) {
                             <a href="VOiC.php" class="nav-link">Search</a>
                         </li>
                         <li class="nav-item active">
-                            <a href="#" class="nav-link">About</a>
+                            <a href="home.php" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item active">
                             <a href="contact.html" class="nav-link">Contact</a>

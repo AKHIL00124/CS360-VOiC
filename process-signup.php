@@ -24,12 +24,16 @@ if ($_POST["password"] !== $_POST["password_confirmation"]) {
     die("Passwords must match");
 }
 
+if (empty($_POST["role"])) {
+    die("UserType should be selected");
+}
+
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 $mysqli = require __DIR__ . "/database.php";
 
-$sql = "INSERT INTO user (name, email, password_hash)
-        VALUES (?, ?, ?)";
+$sql = "INSERT INTO user (name, email, password_hash, role)
+        VALUES (?, ?, ?, ?)";
         
 $stmt = $mysqli->stmt_init();
 
@@ -37,10 +41,10 @@ if ( ! $stmt->prepare($sql)) {
     die("SQL error: " . $mysqli->error);
 }
 
-$stmt->bind_param("sss",
+$stmt->bind_param("sssi",
                   $_POST["name"],
                   $_POST["email"],
-                  $password_hash);
+                  $password_hash, $_POST["role"]);
                   
 if ($stmt->execute()) {
 
@@ -48,11 +52,9 @@ if ($stmt->execute()) {
     exit;
     
 } else {
-    
     if ($mysqli->errno === 1062) {
         die("email already taken");
     } else {
         die($mysqli->error . " " . $mysqli->errno);
     }
 }
-

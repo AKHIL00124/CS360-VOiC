@@ -91,10 +91,17 @@ if(isset($_GET['delid'])) {
     <header>
         <nav class="navbar navbar-expand-lg  navbar-light">
             <div class="container">
-                <a href="VOiC.php" class="navbar-logo"></a>
+                <a href="VOiC.php" class="navbar-logo">
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
-                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
+                </a>
                 
+                 <?php if($_SESSION["role"] == 2) {  ?>
+                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin</a>
+                <?php } ?>   
+                <?php if($_SESSION["role"] == 1) {  ?>
+                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px; font-size: 18px;"> Virtual Office in Cloud</a>
+                <?php } ?>   
+
                 <div class="search-box">
                     <form action="search.php" method="post"  class="search-opt" style="all: unset;padding: none !important;" >
                         <input class="search-txt1" type="text" name="search" placeholder="Type to Search">
@@ -109,7 +116,7 @@ if(isset($_GET['delid'])) {
                             <a href="create.php" class="nav-link">Create</a>
                         </li>
                         <li class="nav-item active">
-                            <a href="#" class="nav-link"> About </a>
+                            <a href="VOiC.php" class="nav-link">Search</a>
                         </li>
                         <li class="nav-item active">
                             <a href="contact.html" class="nav-link"> Contact </a>
@@ -152,7 +159,9 @@ if (mysqli_num_rows($result) > 0) {
                   <a href='read.php?rid=<?php echo $row['id']; ?>' class="btn btn-outline-success mr-2 btn-sm float-right read" >READ</a><br><br>
                   <a href='update.php?uid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>
 <!--                  <a href='home.php?aid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>-->
+               <?php if($_SESSION["role"] == 2) {  ?>
                   <a href='home.php?delid=<?php echo $row['id']; ?>' class="btn btn-outline-danger mr-2 btn-sm float-right read" style=" float: right!important;">DELETE</a><br><br>               
+               <?php } ?>
               </div>
             </div>
         </div>    
