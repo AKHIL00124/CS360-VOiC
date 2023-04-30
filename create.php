@@ -624,15 +624,6 @@ if (isset($_SESSION["user_id"])) {
     </header>
     <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>
     <?php endif; ?>
-   
-
-
-    
-    
-    
-    
-    
-    
     
         <footer class="bg-light text-center text-lg-start" style="margin-top: 200px;">
             <div class="text-center p-3" style="background-color: #7ddf99a5;; ">

@@ -1,12 +1,19 @@
 <?php
+
 session_start();
+
 if (isset($_SESSION["user_id"])) {
+    
     $mysqli = require __DIR__ . "/database.php";
+    
     $sql = "SELECT * FROM user
             WHERE id = {$_SESSION["user_id"]}";
+            
     $result = $mysqli->query($sql);
+    
     $user = $result->fetch_assoc();
 }
+
 ?>
 
 
@@ -26,8 +33,10 @@ if (isset($_SESSION["user_id"])) {
     <title>VOiC</title>
 
 </head>
-<body>      
- <?php if (isset($user)): ?> 
+<body>
+
+       
+            <?php if (isset($user)): ?> 
 
     <!-- navbar -->
     <header>
@@ -35,7 +44,8 @@ if (isset($_SESSION["user_id"])) {
             <div class="container">
                 <a href="home.php" class="navbar-logo"></a>
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
-                    <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>     
+                    <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
+                
                 <div class="search-box">
                     <input class="search-txt" type="text" name="Searchbox" placeholder="Type to Search">
                     <a class="search-btn" href="#"><i class="bi bi-search"></i></a>
@@ -64,29 +74,30 @@ if (isset($_SESSION["user_id"])) {
     
     
     <div class="container">
-        <h1>Search Page</h1>
+        <h1>VOIC Search</h1>
     </div>
     <div class="container" style="padding-bottom: 150px; margin-top: 100px; margin-bottom: 100px; border-radius: 20px; background-color: #73db9038;">
-        <form action="" method="post">
-             <div class="row">
+        <form action="VoicSearch.php" method="post">
+
+            <div class="row" style="padding-top: 40px" >
                 <div class="col-sm-6">
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="today-date" class="">Today's Date:</label>
+                                <label for="todaydate" class="">Today's Date:</label>
                             </div>
                             <div class="col">
-                                <input id="today-date"  name="today-date" type="date" class="">
+                                <input id="todaydate"  name="todaydate" type="date" class="">
                             </div>
                         </div>
                     </div>
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="Child-Name" class="">Child's Name:</label>
+                                <label for="ChildName" class="">Child's Name:</label>
                             </div>
                             <div class="col-sm-6">
-                                <input id="Child-Name" name="Child-Name" type="text" class="" placeholder="Child name"> 
+                                <input id="ChildName" name="ChildName" type="text" class="" placeholder="Child name"> 
                             </div>
                         </div>   
                     </div>
@@ -181,22 +192,22 @@ if (isset($_SESSION["user_id"])) {
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="Child-stay" class="">Child Stay (Present) in:</label>
+                                <label for="ChildStayPre" class="">Child Stay (Present) in:</label>
                                 <input type="text" id="ChildStatePr"  name="ChildStatePr" readonly style="width: 20%; padding: none; border: none; outline: none; background: transparent; "> 
                             </div>
                             <div class="col-sm-6">
-                                <input id="Child-stay" name="Child-stay" type="number" class="" placeholder="Enter no of days">
+                                <input id="ChildStayPre" name="ChildStayPre" type="number" class="" placeholder="Enter no of days">
                             </div>
                         </div>
                     </div>
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="Parent1-State" class="">Residence of</label>
+                                <label for="Parent1State" class="">Residence of</label>
                                 <input type="text" id="Parent1NameConfirm" readonly style="width: 50%; padding: none; border: none; outline: none; background: transparent; margin-left: none !important;"> 
                             </div>
                             <div class="col-sm-6">
-                                <select name="Parent1-State" id="Parent1-State">
+                                <select name="Parent1State" id="Parent1State">
                                     <option value="">Select state</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -274,17 +285,17 @@ if (isset($_SESSION["user_id"])) {
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="Case-date" class="">Date Case Filed:</label>
+                                <label for="CaseDate" class="">Date Case Filed:</label>
                             </div>
                             <div class="col-sm-6">
-                                <input id="Case-date"  name="Case-date" type="date" class="">
+                                <input id="CaseDate"  name="CaseDate" type="date" class="">
                             </div>
                         </div>
                     </div>
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6"> 
-                                <label for="StateName" class="">State Case Filed:</label>
+                                <label for="CaseState" class="">State Case Filed:</label>
                             </div>
                             <div class="col-sm-6">
                                 <select name="CaseState" id="CaseState" oninput="CaseStatePr.value = CaseState.value">
@@ -362,10 +373,10 @@ if (isset($_SESSION["user_id"])) {
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="Change-State" class="">Most recent Modification:</label>
+                                <label for="ChangeState" class="">Most recent Modification:</label>
                             </div>
                             <div class="col-sm-6">
-                                <select name="Change-State" id="Change-State">
+                                <select name="ChangeState" id="ChangeState">
                                     <option value="">Select state</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -461,11 +472,11 @@ if (isset($_SESSION["user_id"])) {
                     <div class="label">
                         <div class="d-lg-flex">
                             <div class="col-sm-6">
-                                <label for="Parent2-State" class="" style="padding-left: 0%;">Residence of</label>
+                                <label for="Parent2State" class="" style="padding-left: 0%;">Residence of</label>
                                 <input type="text" id="Parent2NameConfirm" readonly style="width: 50%; padding: none; border: none; outline: none; background: transparent; "> 
                             </div>
                             <div class="col-sm-6">
-                                <select name="Parent2-State" id="Parent2-State">
+                                <select name="Parent2State" id="Parent2State">
                                     <option value="">Select state</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -539,16 +550,20 @@ if (isset($_SESSION["user_id"])) {
                     </div>
                 </div>
             </div>
-
             <br>
             
+            
+            
+            <div class="container" style="padding-bottom: 10px; padding-top: 40px">
+                <button class="submit" style=" width: 8%" type="submit" id="submit" name="search" > SEARCH </button> 
+            </div>
         </form>
-        <input class="submit" type="submit" value="SEARCH">
     </div>
 
     
 
 
+    
     <?php else: ?>
         <header>
         <nav class="navbar navbar-expand-md  navbar-light">
@@ -556,7 +571,6 @@ if (isset($_SESSION["user_id"])) {
                 <a href="Log-In.php" class="navbar-logo">                 </a>
                      <img class="d-inline-block align-top" src="logo.png" height="40" alt=""> 
                     <a href="Log-In.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
-
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
@@ -566,23 +580,13 @@ if (isset($_SESSION["user_id"])) {
                         <li class="nav-item active">
                             <a href="contact.html" class="nav-link"> Contact </a>
                         </li>
-
                     </ul>
-
                 </div>
             </div>
         </nav>
     </header>
-        
-    <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>
-        
+    <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>  
     <?php endif; ?>
-
-
-
-
-
-
     <footer class="bg-light text-center text-lg-start" style="margin-top: 300px; bottom: 0;">
   <div class="text-center p-3" style="background-color: #7ddf99a5;; ">
     © 2023 Copyright

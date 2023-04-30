@@ -26,7 +26,7 @@ if (isset($_SESSION["user_id"])) {
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png">
-    <title>Search Docs</title>
+    <title>VOiC Search</title>
     <style>
         .read {
             float: right!important;  
@@ -83,18 +83,12 @@ if(isset($_GET['delid'])) {
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
                     <a href="home.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
                 
-                <div class="search-box">
-                    <form  method="post"  class="search-opt" style="all: unset;padding: none !important;" >
-                        <input class="search-txt1" type="text" name="Searchbox" placeholder="Type to Search" >
-                        <button type="submit" name="submit-search" class="search-btn1" style="border: none;    "><i class="bi bi-search"></i></button>
-                    </form>
-    
-                </div>
+
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item active">
-                            <a href="create.php" class="nav-link">Create</a>
+                            <a href="VOiC.php" class="nav-link">Search</a>
                         </li>
                         <li class="nav-item active">
                             <a href="#" class="nav-link"> About </a>
@@ -120,10 +114,24 @@ if(isset($_GET['delid'])) {
         
        
 <?php
-if (isset($_POST['submit-search'])) {
-    $search = $_POST['search'];
+if (isset($_POST['search'])) {
+    $todaydate   = date('Y-m-d', strtotime($_POST['todaydate']));
+    $ChildName   = $_POST['ChildName'];
+    $ChildState   = $_POST['ChildState'];
+    $Parent1Name   = $_POST['Parent1Name'];
+    $ChildStayPre   = $_POST['ChildStayPre'];
+    $Parent1State   = $_POST['Parent1State'];
+    $CaseDate   = date('Y-m-d', strtotime($_POST['CaseDate']));
+    $CaseState   = $_POST['CaseState'];
+    $ChangeState   = $_POST['ChangeState'];
+    $Parent2Name   = $_POST['Parent2Name'];
+    $CaseStay   = $_POST['CaseStay'];
+    $Parent2State   = $_POST['Parent2State'];
 
-    $sql = "SELECT * FROM `documents` WHERE title LIKE '%".$search."%' OR author LIKE '%".$search."%' OR description LIKE '%".$search."%' OR createdOn LIKE '%".$search."%' ";
+    $sql = "SELECT * FROM `documents` WHERE todaydate LIKE '%".$todaydate."%' AND ChildName LIKE '%".$ChildName."%' AND ChildState LIKE '%".$ChildState."%' AND Parent1Name LIKE '%".$Parent1Name."%'  "
+            . " AND Parent1State LIKE '%".$Parent1State."%' AND ChildStayPre LIKE '%".$ChildStayPre."%' AND CaseDate LIKE '%".$CaseDate."%' AND CaseState LIKE '%".$CaseState."%' AND ChangeState LIKE '%".$ChangeState."%' "
+            . "AND CaseStay LIKE '%".$CaseStay."%' AND Parent2Name LIKE '%".$Parent2Name."%' AND Parent2State LIKE '%".$Parent2State."%'  ";
+    
     $result = $mysqli->query($sql);
     if (mysqli_num_rows($result) > 0) {
         $queryResult = mysqli_num_rows($result);
@@ -138,7 +146,7 @@ if (isset($_POST['submit-search'])) {
         
         while($row = mysqli_fetch_assoc($result)){     
 ?>                         
-        
+
         <div class="container" style="padding: 30px; border: #AA96DA solid; border-radius: 20px; background-color: #73db9038; margin-bottom: 50px ">    
             <div class="row" style="  ">
               <div class="col-sm-8" >
@@ -147,7 +155,6 @@ if (isset($_POST['submit-search'])) {
                   <p>Writen on <?php echo $row['createdOn'] ?>  </p>
                   <p class="text-right"> By <?php  echo $row['author'] ?> </p> 
               </div>
-
               <div class="col-sm-4" >
                   <a href='read.php?rid=<?php echo $row['id']; ?>' class="btn btn-outline-success mr-2 btn-sm float-right read" >READ</a><br><br>
                   <a href='update.php?uid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>
@@ -164,13 +171,7 @@ if (isset($_POST['submit-search'])) {
 ?>               
     </div>
     
-    
-    
-    
-    
-    
-    
-    
+
     
     <?php else: ?>
     <header>
@@ -195,12 +196,7 @@ if (isset($_POST['submit-search'])) {
     </header>   
     <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>        
     <?php endif; ?>
-    
-    
-    
-    
 
-    
 <!--    footer-->
     <footer class="bg-light text-center text-lg-start" style="margin-top: 350px; bottom: 0;">
   <div class="text-center p-3" style="background-color: #7ddf99a5;; ">
