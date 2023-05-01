@@ -95,8 +95,8 @@ if(isset($_GET['delid'])) {
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
                 </a>
                 
-                 <?php if($_SESSION["role"] == 2) {  ?>
-                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin</a>
+                <?php if($_SESSION["role"] == 2) {  ?>
+                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin Dashboard</a>
                 <?php } ?>   
                 <?php if($_SESSION["role"] == 1) {  ?>
                     <a href="VOiC.php" class="nav-link" style="padding-left: 20px; font-size: 18px;"> Virtual Office in Cloud</a>

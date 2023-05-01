@@ -24,7 +24,7 @@ if (isset($_SESSION["user_id"])) {
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png">
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
-    <title>Update</title>
+    <title>Update Doc</title>
     <style>
         .ck-editor__editable[role="textbox"] {
             min-height: 700px;
@@ -40,7 +40,16 @@ if (isset($_SESSION["user_id"])) {
             <div class="container">
                 <a href="VOiC.php" class="navbar-logo">
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt=""> </a>
-                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
+                    
+                <?php if($_SESSION["role"] == 2) {  ?>
+                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin Dashboard</a>
+                <?php } ?>   
+                <?php if($_SESSION["role"] == 1) {  ?>
+                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px; font-size: 18px;"> Virtual Office in Cloud</a>
+                <?php } ?>  
+                    
+                    
+                    
                 <div class="search-box">
                     <input class="search-txt" type="text" name="Searchbox" placeholder="Type to Search">
                     <a class="search-btn" href="#"><i class="bi bi-search"></i></a>

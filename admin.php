@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION["user_id"])  && ($_SESSION["role"]!= '2' )) {    
+if (isset($_SESSION["user_id"])) {    
     if ( $_SESSION["role"] != '2'  ) {
                 header("Location: home.php");
                 die();
@@ -12,7 +12,6 @@ if (isset($_SESSION["user_id"])  && ($_SESSION["role"]!= '2' )) {
     $user = $result->fetch_assoc();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,7 @@ if (isset($_SESSION["user_id"])  && ($_SESSION["role"]!= '2' )) {
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png">
-    <title>Admin</title>
+    <title>Admin Dashboard</title>
 
     <style>
         .read {
@@ -63,16 +62,29 @@ if (isset($_SESSION["user_id"])  && ($_SESSION["role"]!= '2' )) {
             transition: 0.5s;
             line-height:  40px;
         }
+        .tableHead {
+            text-align: center;
+            font-size: 21px;
+            border-bottom: 1.5px solid #AA96DA;
+        }
+        .tableCon{
+            font-size: 17px;
+            border-bottom: 0.5px solid #AA96DA;
+        }
+        .tabRow{
+            padding: 20px; 
+            text-align: center;
+        }
     </style>
     
 <?php    
      
 if(isset($_GET['delid'])) {    
         $id = $_GET['delid'];       
-        $sql_delete = "DELETE FROM `documents` WHERE id = '$id' ";
+        $sql_delete = "DELETE FROM `user` WHERE id = '$id' ";
         $result = $mysqli->query($sql_delete);      
         if($result){
-            header('Location: home.php');
+            header('Location: admin.php');
         }else{
             echo "Error";
         }
@@ -91,22 +103,7 @@ if(isset($_GET['delid'])) {
                 <a href="VOiC.php" class="navbar-logo">
                     <img class="d-inline-block align-top" src="logo.png" height="40" alt="">
                 </a>
-                
-                 <?php if($_SESSION["role"] == 2) {  ?>
-                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin</a>
-                <?php } ?>   
-                <?php if($_SESSION["role"] == 1) {  ?>
-                    <a href="VOiC.php" class="nav-link" style="padding-left: 20px; font-size: 18px;"> Virtual Office in Cloud</a>
-                <?php } ?>   
-
-<!--                <div class="search-box">
-                    <form action="search.php" method="post"  class="search-opt" style="all: unset;padding: none !important;" >
-                        <input class="search-txt1" type="text" name="search" placeholder="Type to Search">
-                        <button type="submit" name="submit-search" class="search-btn1" style="border: none;    "><i class="bi bi-search"></i></button>
-                    </form>
-                    
-                </div>-->
-                    
+                    <a href="admin.php" class="nav-link" style="padding-left: 20px; font-weight: bolder; font-size: 18px; letter-spacing: 0.18em; "> Admin Dashboard</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto"> 
@@ -134,34 +131,63 @@ if(isset($_GET['delid'])) {
         <h1>Manage Users</h1>
     </div>
 
-    <div class="container" style="padding-bottom: 150px; margin-top: 100px; margin-bottom: 100px; border-radius: 20px; padding-left: 140px; padding-right: 140px">
+    <div class="container" style="padding-bottom: 150px; margin-top: 50px; margin-bottom: 100px; border-radius: 20px; padding-left: 140px; padding-right: 140px">
 
             
+        
+        
+        <table class="container">
+            <tr class="tableHead"> <th> ID</th><th>USER NAME</th><th> EMAIL</th><th>ROLE</th> </tr>        
+        
+        
 <?php
-$result = $mysqli->query("SELECT * FROM `documents`");
+$result = $mysqli->query("SELECT * FROM `user`");
 if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)){     
 ?>
                 
-        <div class="container" style="padding: 30px; border: #AA96DA solid; border-radius: 20px; background-color: #73db9038; margin-bottom: 50px ">    
+<!--        <div class="container" style="padding: 30px; border: #AA96DA solid; border-radius: 20px; background-color: #73db9038; margin-bottom: 50px ">    
             <div class="row" style="  ">
               <div class="col-sm-8" >
-                  <h2> <?php echo $row['title'] ?> </h2>
+                  <h2> <?php echo $row['name'] ?> </h2>
                   <p>  </p>
-                  <p>Writen on <?php echo $row['createdOn'] ?>  </p>
-                  <p class="text-right"> By <?php  echo $row['author'] ?> </p> 
+                  <p> User Role :  <?php echo $row['role'] ?>  </p>
+                  <p class="text-right"> Email : <?php  echo $row['email'] ?> </p> 
               </div>
 
               <div class="col-sm-4" >
                   <a href='read.php?rid=<?php echo $row['id']; ?>' class="btn btn-outline-success mr-2 btn-sm float-right read" >READ</a><br><br>
                   <a href='update.php?uid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>
-<!--                  <a href='home.php?aid=<?php echo $row['id']; ?>' class="btn btn-outline-primary mr-2 btn-sm float-right read" style="float: right!important;  ">EDIT</a><br><br>-->
                <?php if($_SESSION["role"] == 2) {  ?>
                   <a href='home.php?delid=<?php echo $row['id']; ?>' class="btn btn-outline-danger mr-2 btn-sm float-right read" style=" float: right!important;">DELETE</a><br><br>               
                <?php } ?>
               </div>
             </div>
-        </div>    
+        </div>    -->
+        
+
+  
+  
+            <tr class="tableCon">
+                <td class="tabRow"><?php echo $row['id'] ?></td>
+                <td class="tabRow"><?php echo $row['name'] ?></td>
+                <td class="tabRow"><?php echo $row['email'] ?></td>
+                <td class="tabRow">
+                    <?php 
+                    if ($row['role'] == 1){
+                        echo "Normal User";
+                    }
+                    if ($row['role'] == 2){
+                        echo "Admin User";
+                    }
+                    ?></td>
+                <td>
+                    <a href='admin.php?delid=<?php echo $row['id']; ?>'  class="btn btn-outline-danger mr-2 btn-sm float-right read" > Delete </a>
+                </td>
+            </tr>
+        
+
+        
 <?php        
             
     }
@@ -169,12 +195,19 @@ if (mysqli_num_rows($result) > 0) {
     echo "No results found.";
 }           
 ?>               
-             
+                   
         
-
+        </table>
     </div>
 
-    <?php else: ?>
+    
+    
+    
+    
+    
+    
+    
+<?php else: ?>
         <header>
         <nav class="navbar navbar-expand-md  navbar-light">
             <div class="container">
@@ -198,15 +231,14 @@ if (mysqli_num_rows($result) > 0) {
         
     <p style="text-align: center; padding-top: 100px"><a href="Log-In.php">Log-in</a> or <a href="Sign-Up.html">sign-up</a></p>
         
-    <?php endif; ?>
+<?php endif; ?>
 
-    <footer class="bg-light text-center text-lg-start" style="margin-top: 200px; bottom: 0;">
+<footer class="bg-light text-center text-lg-start" style="margin-top: 200px; bottom: 0;">
   <div class="text-center p-3" style="background-color: #7ddf99a5;; ">
     © 2023 Copyright
     <a class="text-dark" href="https://github.com/AkhilKarri2002">Created by Akhil Karri</a>
   </div>
 </footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
