@@ -46,7 +46,7 @@ if ( ! mysqli_stmt_prepare($stmt, $sql)) {
     die (mysqli_error($conn));
 }
 
-mysqli_stmt_bind_param($stmt, "ssssssssisssssis sissss", $title, $description, $author, $createdOn, $todaydate, $ChildName, $ChildState, $Parent1Name, $ChildStayPre, $Parent1State, $CaseDate, $CaseState, $ChangeState, $Parent2Name, $CaseStay, $Parent2State, $court, $caseNo, $Petitioner, $Respondent, $Citations, $Signature);
+mysqli_stmt_bind_param($stmt, "ssssssssisssssississss", $title, $description, $author, $createdOn, $todaydate, $ChildName, $ChildState, $Parent1Name, $ChildStayPre, $Parent1State, $CaseDate, $CaseState, $ChangeState, $Parent2Name, $CaseStay, $Parent2State, $court, $caseNo, $Petitioner, $Respondent, $Citations, $Signature);
 
 mysqli_stmt_execute($stmt);
 

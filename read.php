@@ -29,6 +29,34 @@ if (isset($_SESSION["user_id"])) {
         .ck-editor__editable[role="textbox"] {
             min-height: 700px;
         }
+        form {
+            padding: 50px;
+        }
+        .Signature{
+            text-transform: uppercase;
+            display: block;
+            margin : 0 auto;
+            height: 40px;
+            width: 350px;
+            border-width: 0.1em;
+            border-radius: 10px;
+            border-color: #a0ced4;
+        }
+        .CaseDet{
+            display: block;
+            margin : 0 auto;
+            height: 40px;
+            width: 250px;
+            border-width: 0.1em;
+            border-radius: 10px;
+            border-color: #a0ced4;
+        }
+        .heading{
+            padding-top: 10px;
+        }
+        .f{
+            font-family: "Times New Roman", Times, serif;
+        }
     </style>
 </head>
 <body>
@@ -96,27 +124,92 @@ $row = mysqli_fetch_array($query);
 
 
     
-    <div class="container">
+    <div class="container f">
         <h1><?= $row['title'];  ?></h1>
     </div>
 
  
-    <div class="container" style="padding-bottom: 150px; margin-top: 0px; margin-bottom: 100px; border-radius: 20px; ">        
+    <div class="container f" style="padding-bottom: 150px; margin-top: 0px; margin-bottom: 100px; border-radius: 20px; ">        
         <form action="home.php" method="post">
+            
+            <div class="row">
+                <div class="col-sm-6" >
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Court : </h4>
+                            </div>
+                            <div class="col">
+                                <h4> <?= $row['court'];  ?> </h4> <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Case No : </h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4> <?= $row['caseNo'];  ?> </h4> <br>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+                
+                <div class="col-sm-6" >
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Petitioner : </h4>
+                            </div>
+                            <div class="col">
+                                <h4> <?= $row['Petitioner'];  ?> </h4> <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Respondent : </h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4> <?= $row['Respondent'];  ?> </h4>
+                                <br>
+                            </div>
+                        </div>   
+                    </div>
+                </div>             
+            </div>
+            
             <div>
                 <div class="container heading">
                     <h3 style="text-align: center;"></h3>
                 </div>
                 <div class="container heading">
-                    <h5 style="text-align: right;"> By <?= $row['author'];  ?> </h5> <p style="text-align: right;">on <?= $row['createdOn'];  ?> </p>
+                    <h4 style="text-align: right;"> Attorney :  <?= $row['author'];  ?> </h4> <h5 style="text-align: right;">on <?= $row['createdOn'];  ?> </h5>
                 </div>
                 <br>
             </div>
-            <div class="container">
+            <div class="container" style="padding: 30px ">
+                
+                <h2 style="text-align: center; border-bottom: black solid; padding-bottom: 15px">Case Matter</h2>
+                                    
                 <div class="form-group">                    
-                    <h5 style="line-height: 1.8;">  <?= $row['description'];  ?> </h5>  
+                    <h4 style="line-height: 2;">  <?= $row['description'];  ?> </h4>  
                 </div>
             </div>
+    
+            <div class="col-6-sm container heading" style="padding: 30px " >
+                <h3 style="text-align: center; border-bottom: black solid; padding-bottom: 15px ">Citations of case</h3> <br>            
+                <h4 style=" text-align: center;" ><cite> <?= $row['Citations'];  ?> </cite></h4>
+            </div>
+            
+            <div class="container heading" style="padding-top: 20px; padding-bottom: 15px " >
+                <h3 style="text-align: center; padding: 20px; border-bottom: black solid; padding-bottom: 20px">Acknowledgment</h3>              
+                <h4 style="text-align: center; padding: 20px ">I completely Agree with and Admit the above paragraph,  <ins style="font-family: Apple Chancery, cursive; padding: 10px " > <?= $row['Signature'];  ?>  </ins> </h4>
+            </div>
+            <br>
+
             <input type="hidden" name="id" value="<? =$id ?>">
             <br>
             <div class="container" style="padding-bottom: 10px;">
@@ -126,6 +219,11 @@ $row = mysqli_fetch_array($query);
         
     </div>
        
+    
+    
+    
+    
+    
 <?php else: ?>
         <header>
         <nav class="navbar navbar-expand-md  navbar-light">
