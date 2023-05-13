@@ -11,11 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($_POST["password"], $user["password_hash"])) {
             session_start();       
             session_regenerate_id();
-            
             $_SESSION["role"] = $user["role"];
-            
             $_SESSION["user_id"] = $user["id"];
-            
             if ($user["role"] == 2){
                 header("Location: admin.php");
                 exit;
@@ -24,15 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: home.php");
                 exit;
             }
-            
-
         }
     }   
     $is_invalid = true;
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <header>
         <nav class="navbar navbar-expand-md  navbar-light">
             <div class="container">
-                <a href="VOiC.html" class="navbar-logo">
+                <a href="VOiC.html" class="navbar-logo"></a>
                     <a href="VOiC.html" class="nav-link" style="padding-left: 20px;"> Virtual Office in Cloud</a>
-                </a>
+                
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
@@ -111,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     
-            <footer class="bg-light text-center text-lg-start" style="margin-top: 350px;">
+        <footer class="bg-light text-center text-lg-start" style="margin-top: 350px;">
             <div class="text-center p-3" style="background-color: #7ddf99a5;; ">
               © 2023 Copyright
               <a class="text-dark" href="https://github.com/AkhilKarri2002">Created by Akhil Karri</a>

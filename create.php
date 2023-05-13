@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if (isset($_SESSION["user_id"])) {
     $mysqli = require __DIR__ . "/database.php";    
@@ -8,7 +7,6 @@ if (isset($_SESSION["user_id"])) {
     $result = $mysqli->query($sql);    
     $user = $result->fetch_assoc();
 }
-
 ?>
 
 
@@ -26,21 +24,45 @@ if (isset($_SESSION["user_id"])) {
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png">
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
-
-
     <title>Create Doc</title>
-    
-    
-    
-    
+
     <style>
         .ck-editor__editable[role="textbox"] {
-            min-height: 700px;
+            min-height: 600px;
         }
         form {
             padding: 50px;
         }
-        
+        .Signature{
+            text-transform: uppercase;
+            display: block;
+            margin : 0 auto;
+            height: 40px;
+            width: 350px;
+            border-width: 0.1em;
+            border-radius: 10px;
+            border-color: #a0ced4;
+        }
+        .CaseDet{
+            display: block;
+            margin : 0 auto;
+            height: 40px;
+            width: 250px;
+            border-width: 0.1em;
+            border-radius: 10px;
+            border-color: #a0ced4;
+        }
+        .CaseDetTop{
+                padding-top: 10px;
+                padding-bottom: 10px;
+        }
+        .heading{
+            padding-top: 10px;
+        }
+        .f{
+            font-family: "Times New Roman", Times, serif;
+        }
+
     </style>
 </head>
 <body>
@@ -92,32 +114,87 @@ if (isset($_SESSION["user_id"])) {
         <h1>Create  Document</h1>
     </div>
 
-    <div class="container" style="padding-bottom: 150px; margin-top: 100px; margin-bottom: 100px; border-radius: 20px; background-color: #73db9038;">
+    <div class="container f" style="padding-bottom: 150px; margin-top: 100px; margin-bottom: 100px; border-radius: 20px; background-color: #73db9038; ">
         <form action="process-doc.php" method="post">
-            <div>
-                <div class="container heading">
-                    <h4 style="text-align: center;">Title</h4>
+            <div class="row">
+        
+                <div class="col-sm-6" >
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Court : </h4>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="CaseDet" name="court" id="court" style=" text-align: center" placeholder="Court Name"> <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Case No : </h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="number" class="CaseDet" name="caseNo" id="caseNo" style=" text-align: center" placeholder="Case Number"> <br>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+                
+                <div class="col-sm-6" >
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Petitioner : </h4>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="CaseDet" name="Petitioner" id="Petitioner" style=" text-align: center" placeholder="Petitioner's Name"> <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="CaseDetTop">
+                        <div class="d-lg-flex">
+                            <div class="col-sm-6" style="padding-left: 70px ">
+                                <h4 >Respondent : </h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="CaseDet" name="Respondent" id="Respondent" style=" text-align: center" placeholder="Respondent's Name"> <br>
+                            </div>
+                        </div>   
+                    </div>
+                </div>             
+                <div class="col-6-sm container heading">
+                    <h4 style="text-align: center;">Title of the case</h4>
                     <input type="text" class="entry" name="title" id="title" style=" text-align: center" placeholder="Title of the Document"> <br>
                 </div>
-                <div class="container heading">
-                    <h4 style="text-align: center;">Author</h4>
-                    <input type="text" class="entry" name="author" id="author" style=" text-align: center" placeholder="Author's Name"> <br>
+                <div class="col-6-sm container heading">
+                    <h4 style="text-align: center;">Attorney</h4>
+                    <input type="text" class="entry" name="author" id="author" style=" text-align: center" placeholder="Attorney's Name"> <br>
                 </div>
             </div>
-            <div class="container">
+            <div class="container heading">
                 <div class="form-group"> 
+                    <h4 style="text-align: center;">Case Matter</h4>
                     <textarea name="description" class="form-control" id="description"> 
                     </textarea>
                 </div>
             </div>
+            <div class="col-6-sm container heading" style="padding-top: 30px " >
+                <h4 style="text-align: center;">Citations of case</h4>
+                <input type="text" class="entry" name="Citations" id="Citations" style=" text-align: center; width: 100%; " > <br>
+            </div>
+            <div class="container heading" style="padding-top: 20px; padding-bottom: 30px " >
+                <h2 style="text-align: center; padding: 20px">Acknowledgment</h2>
+                        <h4 style="text-align: center;">I completely agree with and admit the above paragraphs </h4>
+                        <input type="text" class="Signature" name="Signature" id="Signature" style=" text-align: center" placeholder="Signature"> <br>
+            </div>
             <br>
-            
-            
             
             
 <!--Document Attributes-->
 
-             <div class="row" style="padding-top: 40px" >
+             <div class="row" style="padding-top: 50px; padding-bottom: 60px;  border-style: solid; border-radius: 20px; border-width: 1px;" >
+                 <h4 style="text-align: center; padding-bottom: 40px;   ">Certificate of Service</h4>
                 <div class="col-sm-6">
                     <div class="label">
                         <div class="d-lg-flex">

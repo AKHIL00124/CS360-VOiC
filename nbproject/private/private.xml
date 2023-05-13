@@ -3,17 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/VOiC/database.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/Log-In.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/VOiC.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/read.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/search.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/Sign-Up.html</file>
-            <file>file:/C:/xampp/htdocs/VOiC/create.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/update-doc.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/process-signup.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/update.php</file>
-            <file>file:/C:/xampp/htdocs/VOiC/home.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/validate-email.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/Log-In.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/DbConnect.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/process-doc.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/home.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/search.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/logout.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/process-signup.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/VOiC.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/Sign-Up.html</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/contact.html</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/admin.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/createDoc.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/style.css</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/read.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/update.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/update-doc.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/create.php</file>
+            <file>file:/Applications/XAMPP/htdocs/VOiC/database.php</file>
         </group>
     </open-files>
 </project-private>
