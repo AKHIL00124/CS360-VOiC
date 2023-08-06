@@ -206,7 +206,7 @@ $row = mysqli_fetch_array($query);
             
             <div class="container heading" style="padding-top: 20px; padding-bottom: 15px " >
                 <h3 style="text-align: center; padding: 20px; border-bottom: black solid; padding-bottom: 20px">Acknowledgment</h3>              
-                <h4 style="text-align: center; padding: 20px ">I completely Agree with and Admit the above paragraph,  <ins style="font-family: Apple Chancery, cursive; padding: 10px " > <?= $row['Signature'];  ?>  </ins> </h4>
+                <h4 style="text-align: center; padding: 20px ">I completely Agree with and Admit the above paragraph,  <ins style="font-family: Apple Chancery, cursive; padding: 10px; text-transform: uppercase; " > <?= $row['Signature'];  ?>  </ins> </h4>
             </div>
             <br>
 
