@@ -24,6 +24,7 @@ if (isset($_SESSION["user_id"])) {
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png">
 <!--    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>-->
+<!--    <script src="https://cdn.ckeditor.com/ckeditor5/33.1.0/classic/ckeditor.js"></script>-->
     <title>Create Doc</title>
 
     <style>
@@ -736,230 +737,97 @@ if (isset($_SESSION["user_id"])) {
     
     
             <script>
+            CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+                toolbar: {
+                    items: [
+                        'exportPDF','exportWord', '|',
+                        'findAndReplace', 'selectAll', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                        'textPartLanguage', '|',
+                        'sourceEditing'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                    ]
+                },
+                placeholder: 'Please start typing your legal document here......',
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                fontSize: {
+                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    supportAllValues: true
+                },
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                htmlEmbed: {
+                    showPreviews: true
+                },
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
                 
-                CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-        plugins: [ Mention, MentionCustomization, /* ... */ ],
-        mention: {
-            dropdownLimit: 4,
-            feeds: [
-                {
-                    marker: '@',
-                    feed: getFeedItems,
-                    itemRenderer: customItemRenderer
-                }
-            ]
-        }
-    } )
-    .then( editor => {
-        window.editor = editor;
-    } )
-    .catch( err => {
-        console.error( err.stack );
-    } );
-
-function MentionCustomization( editor ) {
-    // The upcast converter will convert <a class="mention" href="" data-user-id="">
-    // elements to the model 'mention' attribute.
-    editor.conversion.for( 'upcast' ).elementToAttribute( {
-        view: {
-            name: 'a',
-            key: 'data-mention',
-            classes: 'mention',
-            attributes: {
-                href: true,
-                'data-user-id': true
-            }
-        },
-        model: {
-            key: 'mention',
-            value: viewItem => {
-                // The mention feature expects that the mention attribute value
-                // in the model is a plain object with a set of additional attributes.
-                // In order to create a proper object, use the toMentionAttribute helper method:
-                const mentionAttribute = editor.plugins.get( 'Mention' ).toMentionAttribute( viewItem, {
-                    // Add any other properties that you need.
-                    link: viewItem.getAttribute( 'href' ),
-                    userId: viewItem.getAttribute( 'data-user-id' )
-                } );
-
-                return mentionAttribute;
-            }
-        },
-        converterPriority: 'high'
-    } );
-
-    // Downcast the model 'mention' text attribute to a view <a> element.
-    editor.conversion.for( 'downcast' ).attributeToElement( {
-        model: 'mention',
-        view: ( modelAttributeValue, { writer } ) => {
-            // Do not convert empty attributes (lack of value means no mention).
-            if ( !modelAttributeValue ) {
-                return;
-            }
-
-            return writer.createAttributeElement( 'a', {
-                class: 'mention',
-                'data-mention': modelAttributeValue.id,
-                'data-user-id': modelAttributeValue.userId,
-                'href': modelAttributeValue.link
-            }, {
-                // Make mention attribute to be wrapped by other attribute elements.
-                priority: 20,
-                // Prevent merging mentions together.
-                id: modelAttributeValue.uid
-            } );
-        },
-        converterPriority: 'high'
-    } );
-}
-
-const items = [
-    { id: '@swarley', userId: '1', name: 'Barney Stinson', link: 'https://www.imdb.com/title/tt0460649/characters/nm0000439' },
-    { id: '@lilypad', userId: '2', name: 'Lily Aldrin', link: 'https://www.imdb.com/title/tt0460649/characters/nm0004989' },
-    { id: '@marry', userId: '3', name: 'Marry Ann Lewis', link: 'https://www.imdb.com/title/tt0460649/characters/nm1130627' },
-    { id: '@marshmallow', userId: '4', name: 'Marshall Eriksen', link: 'https://www.imdb.com/title/tt0460649/characters/nm0781981' },
-    { id: '@rsparkles', userId: '5', name: 'Robin Scherbatsky', link: 'https://www.imdb.com/title/tt0460649/characters/nm1130627' },
-    { id: '@tdog', userId: '6', name: 'Ted Mosby', link: 'https://www.imdb.com/title/tt0460649/characters/nm1102140' }
-];
-
-function getFeedItems( queryText ) {
-    // As an example of an asynchronous action, return a promise
-    // that resolves after a 100ms timeout.
-    // This can be a server request or any sort of delayed action.
-    return new Promise( resolve => {
-        setTimeout( () => {
-            const itemsToDisplay = items
-                // Filter out the full list of all items to only those matching the query text.
-                .filter( isItemMatching )
-                // Return 10 items max - needed for generic queries when the list may contain hundreds of elements.
-                .slice( 0, 10 );
-
-            resolve( itemsToDisplay );
-        }, 100 );
-    } );
-
-    // Filtering function - it uses `name` and `username` properties of an item to find a match.
-    function isItemMatching( item ) {
-        // Make the search case-insensitive.
-        const searchString = queryText.toLowerCase();
-
-        // Include an item in the search results if name or username includes the current user input.
-        return (
-            item.name.toLowerCase().includes( searchString ) ||
-            item.id.toLowerCase().includes( searchString )
-        );
-    }
-}
-
-function customItemRenderer( item ) {
-    const itemElement = document.createElement( 'span' );
-
-    itemElement.classList.add( 'custom-item' );
-    itemElement.id = `mention-list-item-id-${ item.userId }`;
-    itemElement.textContent = `${ item.name } `;
-
-    const usernameElement = document.createElement( 'span' );
-
-    usernameElement.classList.add( 'custom-item-username' );
-    usernameElement.textContent = item.id;
-
-    itemElement.appendChild( usernameElement );
-
-    return itemElement;
-}
-
-                
-                
-//            CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-//                toolbar: {
-//                    items: [
-//                        'exportPDF','exportWord', '|',
-//                        'findAndReplace', 'selectAll', '|',
-//                        'heading', '|',
-//                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-//                        'bulletedList', 'numberedList', 'todoList', '|',
-//                        'outdent', 'indent', '|',
-//                        'undo', 'redo',
-//                        '-',
-//                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-//                        'alignment', '|',
-//                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
-//                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
-//                        'textPartLanguage', '|',
-//                        'sourceEditing'
-//                    ],
-//                    shouldNotGroupWhenFull: true
-//                },
-//                list: {
-//                    properties: {
-//                        styles: true,
-//                        startIndex: true,
-//                        reversed: true
-//                    }
-//                },
-//                heading: {
-//                    options: [
-//                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-//                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-//                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-//                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-//                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-//                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-//                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-//                    ]
-//                },
-//                placeholder: 'Please start typing your legal document here......',
-//                fontFamily: {
-//                    options: [
-//                        'default',
-//                        'Arial, Helvetica, sans-serif',
-//                        'Courier New, Courier, monospace',
-//                        'Georgia, serif',
-//                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
-//                        'Tahoma, Geneva, sans-serif',
-//                        'Times New Roman, Times, serif',
-//                        'Trebuchet MS, Helvetica, sans-serif',
-//                        'Verdana, Geneva, sans-serif'
-//                    ],
-//                    supportAllValues: true
-//                },
-//                fontSize: {
-//                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
-//                    supportAllValues: true
-//                },
-//                htmlSupport: {
-//                    allow: [
-//                        {
-//                            name: /.*/,
-//                            attributes: true,
-//                            classes: true,
-//                            styles: true
-//                        }
-//                    ]
-//                },
-//                htmlEmbed: {
-//                    showPreviews: true
-//                },
-//                link: {
-//                    decorators: {
-//                        addTargetToExternalLinks: true,
-//                        defaultProtocol: 'https://',
-//                        toggleDownloadable: {
-//                            mode: 'manual',
-//                            label: 'Downloadable',
-//                            attributes: {
-//                                download: 'file'
-//                            }
-//                        }
-//                    }
-//                },
-//                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-//                mention: {
-//                    feeds: [
-//                        {
-//                            marker: '"',
-//                            feed: [
-//                                '"L.A.M. v. State, 547 P.2d 827 (Alaska 1976)"',
+                mention: {
+                    feeds: [
+                        {
+                            marker: '"',
+                            feed: [
+                                { id: '"L.A.M. v. State, 547 P.2d 827 (Alaska 1976)"', name: '"L.A.M. v. State, 547 P.2d 827 (Alaska 1976)"', link: 'https://www.imdb.com'}
 //                                '"Peter N. Swisher, Lawrence D. Diehl & James R. Cottrell, Virginia Practice Series: Family Law: Theory, Practice, and Forms § 15.8 (2004 ed.) (“The right of a non-custodial parent to the company and society of his or her child is well established. Barring gross unfitness which jeopardizes the well being of the child, visitation is a presumed entitlement.”)"',
 //                                '"Szemler v. Clements, 214 Va. 639, 643, 202 S.E.2d 880, 884 (1974) (“Parental rights of custody are founded upon the strong presumption that the best interests of the child will be served by placing it in the custody of its natural parents.”)"',
 //                                '"Davenport v. Little-Bowser, 269 Va. 546, 555, 611 S.E.2d 366, 371 (2005)"',
@@ -970,61 +838,77 @@ function customItemRenderer( item ) {
 //                                '"See also Murphy v. Woerner, 748 P.2d 749, 750 (Alaska 1988); Delk v. Gonzalez, 658 N.E.2d 681, 684 (Mass. 1995)"',
 //                                '"Meade v. Meade, 812 F.2d 1473, 1476 (4th Cir. 1987) (“The PKPA quite simply preempts conflicting state court methods for ascertaining custody jurisdiction.”)"' ,
 //                                '"Derwing, T. M., Rossiter, M. J., & Munro, M. J. (2002). Teaching native speakers to listen to foreign-accented speech. Journal of Multilingual and Multicultural Development, 23(4), 245-259."' 
-//                            ],
-//                            minimumCharacters: 1
-//                        }
-//                    ],
-//                   
-//                    
-//                    itemRenderer: ( item ) => {
-//				return createDomFromHtml( `<cite>${ item.name }</cite>` );
-//			}
-//                },
-//                removePlugins: [
-//                    // These two are commercial, but you can try them out without registering to a trial.
-//                    // 'ExportPdf',
-//                    // 'ExportWord',
-//                    'CKBox',
-//                    'CKFinder',
-//                    'EasyImage',
-//                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-//                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-//                    // Storing images as Base64 is usually a very bad idea.
-//                    // Replace it on production website with other solutions:
-//                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-//                    // 'Base64UploadAdapter',
-//                    'RealTimeCollaborativeComments',
-//                    'RealTimeCollaborativeTrackChanges',
-//                    'RealTimeCollaborativeRevisionHistory',
-//                    'PresenceList',
-//                    'Comments',
-//                    'TrackChanges',
-//                    'TrackChangesData',
-//                    'RevisionHistory',
-//                    'Pagination',
-//                    'WProofreader',
-//                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-//                    // from a local file system (file://) - load this site via HTTP server if you enable MathType.
-//                    'MathType',
-//                    // The following features are part of the Productivity Pack and require additional license.
-//                    'SlashCommand',
-//                    'Template',
-//                    'DocumentOutline',
-//                    'FormatPainter',
-//                    'TableOfContents'
-//                ]
-//            });
+                            ],
+                            minimumCharacters: 1
+                        }
+                    ],
+                    itemRenderer: ( item ) => {
+				return createDomFromHtml( `<a href="${ item.link }"><cite>${ item.name }</cite></a>` );
+			}
+                },
+
+
+                removePlugins: [
+                    // These two are commercial, but you can try them out without registering to a trial.
+                    // 'ExportPdf',
+                    // 'ExportWord',
+                    'CKBox',
+                    'CKFinder',
+                    'EasyImage',
+                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                    // Storing images as Base64 is usually a very bad idea.
+                    // Replace it on production website with other solutions:
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                    // 'Base64UploadAdapter',
+                    'RealTimeCollaborativeComments',
+                    'RealTimeCollaborativeTrackChanges',
+                    'RealTimeCollaborativeRevisionHistory',
+                    'PresenceList',
+                    'Comments',
+                    'TrackChanges',
+                    'TrackChangesData',
+                    'RevisionHistory',
+                    'Pagination',
+                    'WProofreader',
+                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                    // from a local file system (file://) - load this site via HTTP server if you enable MathType.
+                    'MathType',
+                    // The following features are part of the Productivity Pack and require additional license.
+                    'SlashCommand',
+                    'Template',
+                    'DocumentOutline',
+                    'FormatPainter',
+                    'TableOfContents'
+                ]
+            });
         </script>
     
-    
+<!--    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                extraPlugins: [mentionPlugin],
+                mention: {
+                    feeds: [
+                        {
+                            marker: '@',
+                            feed: 'fetch_mentions.php?query={q}'
+                        }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>-->
     
     
 <!--<script>
-//    ClassicEditor
-//        .create( document.querySelector( '#description' ) )
-//        .catch( error => {
-//            console.error( error );
-//        } );
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
 </script>-->
 
 </body>
