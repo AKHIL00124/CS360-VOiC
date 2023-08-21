@@ -25,6 +25,8 @@ if (isset($_SESSION["user_id"])) {
     <link rel="icon" href="logo.png">
 <!--    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>-->
 <!--    <script src="https://cdn.ckeditor.com/ckeditor5/33.1.0/classic/ckeditor.js"></script>-->
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/super-build/ckeditor.js"></script>
+    
     <title>Create Doc</title>
 
     <style>
@@ -736,7 +738,7 @@ if (isset($_SESSION["user_id"])) {
     
     
     
-            <script>
+        <script>
             CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
                 toolbar: {
                     items: [
@@ -820,35 +822,19 @@ if (isset($_SESSION["user_id"])) {
                         }
                     }
                 },
-                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-                
                 mention: {
                     feeds: [
                         {
                             marker: '"',
-                            feed: [
-                                { id: '"L.A.M. v. State, 547 P.2d 827 (Alaska 1976)"', name: '"L.A.M. v. State, 547 P.2d 827 (Alaska 1976)"', link: 'https://www.imdb.com'}
-//                                '"Peter N. Swisher, Lawrence D. Diehl & James R. Cottrell, Virginia Practice Series: Family Law: Theory, Practice, and Forms § 15.8 (2004 ed.) (“The right of a non-custodial parent to the company and society of his or her child is well established. Barring gross unfitness which jeopardizes the well being of the child, visitation is a presumed entitlement.”)"',
-//                                '"Szemler v. Clements, 214 Va. 639, 643, 202 S.E.2d 880, 884 (1974) (“Parental rights of custody are founded upon the strong presumption that the best interests of the child will be served by placing it in the custody of its natural parents.”)"',
-//                                '"Davenport v. Little-Bowser, 269 Va. 546, 555, 611 S.E.2d 366, 371 (2005)"',
-//                                '"Murphy v. Woerner, 748 P.2d 749, 750 (Alaska 1988); Delk v. Gonzalez, 658 N.E.2d 681, 684 (Mass. 1995)"',
-//                                '"Wilson v. Gouse, 441 S.E.2d 57, 60 (Ga.1994) (“the PKPA was intended not only to apply where a child was abducted by a parent and removed to another state but to remedy what was widely considered to be the inapplicability of the full faith and credit statute to child custody orders”"',
-//                                '"Scott v. Rutherfoord, 30 Va. App. 176, 187, 516 S.E.2d 225, 231 (1999) (quoting Thompson, 484 U.S. at 181, 183)"',
-//                                '"Thompson, 484 U.S. at 180. Indeed, “a parent who lost a custody battle in one State had an incentive to kidnap the child and move to another State to relitigate the issue"',
-//                                '"See also Murphy v. Woerner, 748 P.2d 749, 750 (Alaska 1988); Delk v. Gonzalez, 658 N.E.2d 681, 684 (Mass. 1995)"',
-//                                '"Meade v. Meade, 812 F.2d 1473, 1476 (4th Cir. 1987) (“The PKPA quite simply preempts conflicting state court methods for ascertaining custody jurisdiction.”)"' ,
-//                                '"Derwing, T. M., Rossiter, M. J., & Munro, M. J. (2002). Teaching native speakers to listen to foreign-accented speech. Journal of Multilingual and Multicultural Development, 23(4), 245-259."' 
-                            ],
+                            feed: getFeedItems,
                             minimumCharacters: 1
-                        }
-                    ],
-                    itemRenderer: ( item ) => {
-				return createDomFromHtml( `<a href="${ item.link }"><cite>${ item.name }</cite></a>` );
-			}
+                        },
+                                // Add more feed configurations as needed
+                    ]
                 },
 
-
                 removePlugins: [
+
                     // These two are commercial, but you can try them out without registering to a trial.
                     // 'ExportPdf',
                     // 'ExportWord',
@@ -882,34 +868,31 @@ if (isset($_SESSION["user_id"])) {
                     'TableOfContents'
                 ]
             });
+
+            const items = []; // Initialize an empty array
+
+            function getFeedItems(queryText) {
+                return new Promise(resolve => {
+                    fetch(window.location.origin + '/VOiC/fetch_mentions.php?query=' + queryText)
+                            .then(response => response.json())
+                            .then(data => {
+                                const itemsToDisplay = data
+                                        .map(item => ({id: `"${item.title}"`}))
+                                        .slice(0, 10);
+
+                                resolve(itemsToDisplay);
+                            })
+                            .catch(error => {
+                                console.error("Error fetching data:", error);
+                                resolve([]); 
+                            });
+                });
+            }
+            
+
         </script>
     
-<!--    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                extraPlugins: [mentionPlugin],
-                mention: {
-                    feeds: [
-                        {
-                            marker: '@',
-                            feed: 'fetch_mentions.php?query={q}'
-                        }
-                    ]
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>-->
     
-    
-<!--<script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>-->
 
 </body>
 </html>
