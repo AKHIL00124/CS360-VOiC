@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 30, 2023 at 11:44 PM
+-- Host: localhost
+-- Generation Time: Sep 22, 2023 at 06:51 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `voic`
+-- Database: `VOiC`
 --
 
 -- --------------------------------------------------------
@@ -44,17 +44,33 @@ CREATE TABLE `documents` (
   `ChangeState` varchar(45) NOT NULL,
   `Parent2Name` varchar(125) NOT NULL,
   `CaseStay` int(11) NOT NULL,
-  `Parent2State` varchar(45) NOT NULL
+  `Parent2State` varchar(45) NOT NULL,
+  `court` varchar(255) NOT NULL,
+  `caseNo` int(11) NOT NULL,
+  `Petitioner` varchar(255) NOT NULL,
+  `Respondent` varchar(255) NOT NULL,
+  `Citations` text NOT NULL,
+  `Signature` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `documents`
 --
 
-INSERT INTO `documents` (`id`, `title`, `description`, `author`, `createdOn`, `todaydate`, `ChildName`, `ChildState`, `Parent1Name`, `ChildStayPre`, `Parent1State`, `CaseDate`, `CaseState`, `ChangeState`, `Parent2Name`, `CaseStay`, `Parent2State`) VALUES
-(17, '1234', '<p>1234</p>', '1243', '2023-04-30', '2023-04-30', '1234', 'AL', '1234', 1234, 'AL', '2023-04-30', 'AL', 'AL', '1234', 1234, 'AL'),
-(18, 'asdf', '<p>asdf</p>', 'asdf', '2023-04-30', '2023-03-31', 'asdf', 'CA', 'asdf', 789, 'CA', '2023-03-31', 'CA', 'CA', 'asdf', 789, 'CA'),
-(19, 'WHY IS IT HARD TO LEARN TO PROGRAM?', '<p><a href=\"https://www.lindenwood.edu/science/mathematics-computer-science-and-information-technology/computer-science/prospective-students/is-computer-science-hard/\">IS COMPUTER SCIENCE HARD?</a></p><h2><a href=\"https://slate.lindenwood.edu/apply/\">APPLY NOW</a></h2><h2><a href=\"https://slate.lindenwood.edu/register/request_info\">REQUEST INFO</a></h2><h2><a href=\"https://www.lindenwood.edu/admissions/visit-campus/\">SCHEDULE A VISIT</a></h2><h2>I HEARD THAT COMPUTER SCIENCE IS ONE OF THE HARDEST FIELDS OF STUDY. IS THAT TRUE?</h2><p>Yes. Computer Science is a hard discipline to learn. But, if you are motivated and devote sufficient time to studying the discipline, then it is possible to learn Computer Science.</p><h3>FULL ANSWER</h3><h2>WHY IS IT HARD TO LEARN TO PROGRAM?</h2><p>Computer Science is a hard discipline to learn because learning to program is hard. But, if you are motivated and devote sufficient time to studying the discipline, then it is possible to learn how to program.</p><h3>FULL ANSWER</h3><h2>WHAT DOES IT MEAN THAT THE DISCIPLINE OF COMPUTER SCIENCE IS CONSTRUCTIVE IN NATURE?</h2><p>Computer Science is a hard discipline to learn because of the constructive nature of the discipline. But, if you are motivated and devote sufficient time to studying the discipline, then it is possible to learn and master every concept when it is encountered.</p><h3>FULL ANSWER</h3><h2>HOW MUCH TIME IS REQUIRED TO SUCCESSFULLY LEARN COMPUTER SCIENCE?</h2><p>Even though Computer Science is a hard discipline to learn, if you are motivated and devote sufficient time to studying the discipline, then it is possible to learn Computer Science.</p><h2>BUT IF I HAVE TO PUT IN SO MUCH TIME TO STUDY COMPUTER SCIENCE, THEN I WON\'T HAVE TIME TO DO OTHER THINGS, WILL I?</h2><p>Computer Science requires students to invest a lot of time to learn. But, if you learn good time management skills, you can put in the necessary time to learn the discipline and still have time for other activities.</p><h3>FULL ANSWER</h3><p>&nbsp;</p><blockquote><p>Many students are not motivated or prepared to invest this amount of time. They are looking for an “easy” discipline that “allows them time for significant extra-curricular or social activities.” They don’t believe that they can have a fulfilling social life in college while putting in this amount of time to study. Fortunately, students who are motivated to invest the necessary time often find that they can also fit in active extra-curricular or social calendars and still be satisfied. The only difference is that CS students must utilize really good time management skills, and must plan for these extra-curricular and social activities.</p></blockquote>', 'Akhil', '2023-04-30', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '');
+INSERT INTO `documents` (`id`, `title`, `description`, `author`, `createdOn`, `todaydate`, `ChildName`, `ChildState`, `Parent1Name`, `ChildStayPre`, `Parent1State`, `CaseDate`, `CaseState`, `ChangeState`, `Parent2Name`, `CaseStay`, `Parent2State`, `court`, `caseNo`, `Petitioner`, `Respondent`, `Citations`, `Signature`) VALUES
+(1, 'Santosky v. Kramer', '<p><i><strong>Santosky v. Kramer</strong></i>, 455 U.S. 745 (1982), is a <a href=\"https://en.wikipedia.org/wiki/Supreme_Court_of_the_United_States\">Supreme Court</a> case involving the <a href=\"https://en.wikipedia.org/wiki/Legal_burden_of_proof\">burden of proof</a> for the revocation of <a href=\"https://en.wikipedia.org/wiki/Parental_rights\">parental rights</a>. The case arose when the <a href=\"https://en.wikipedia.org/wiki/Ulster_County,_New_York\">Ulster County, New York</a>, Department of Social Services sought to revoke John Santosky II and Annie Santosky\'s parental rights to their three children. Under Section 622 of the <a href=\"https://en.wikipedia.org/wiki/New_York_State\">New York State</a> Family Court Act, the state was permitted to revoke parental rights to a natural child if, after a <a href=\"https://en.wikipedia.org/wiki/Preponderance_of_the_evidence\">fair preponderance of the evidence</a>, a court found \"permanent neglect.\" The New York State Family Court found such neglect by using the \"fair preponderance\" standard. The <a href=\"https://en.wikipedia.org/wiki/Appellate_Division_of_the_New_York_Supreme_Court\">Appellate Division of the New York Supreme Court</a> upheld the constitutionality of the burden of proof used.</p><ul><li>In a 5–4 opinion written by <a href=\"https://en.wikipedia.org/wiki/Associate_Justice_of_the_United_States_Supreme_Court\">Justice</a> <a href=\"https://en.wikipedia.org/wiki/Harry_Blackmun\">Harry Blackmun</a>, the Supreme Court of the United States vacated the Appellate Division\'s ruling, holding that states seeking to sever parental rights irrevocably must show at least <a href=\"https://en.wikipedia.org/wiki/Clear_and_convincing_evidence\">clear and convincing evidence</a> of neglect. Justice <a href=\"https://en.wikipedia.org/wiki/William_Rehnquist\">William Rehnquist</a>, joined by three others, dissented, on the grounds that the majority\'s focus on a single aspect of the law disregarded the fairness of the scheme as a whole. The ruling has since been criticized for its intrusion into state affairs. Because of the ruling, all states previously using the fair preponderance standard changed to the clear and convincing standard, but <a href=\"https://en.wikipedia.org/wiki/California\">California</a> has since abandoned the clear and convincing standard and returned to the fair preponderance standard.</li></ul>', 'Abraham Lincoln', '2023-05-13', '2023-05-13', 'Child', 'AL', 'P1', 12, 'AL', '2023-05-13', 'AL', 'AL', 'P2', 12, 'AL', 'Moscow High Court', 374986, 'Franny Bronson', 'Dreda Jayna', 'Derwing, T. M., Rossiter, M. J., & Munro, M. J. (2002). Teaching native speakers to listen to foreign-accented speech. Journal of Multilingual and Multicultural Development, 23(4), 245-259.', 'akhil'),
+(23, 'DATABASE MANAGEMENT SYSTEM (DBMS)', '<blockquote><p><strong>A database management system (DBMS) is system software for creating and managing databases. A DBMS makes it possible for end users to create, protect, read, update and delete data in a database. The most prevalent type of data management platform, the DBMS essentially serves as an interface between databases and users or application programs, ensuring that data is consistently organized and remains easily accessible.</strong></p></blockquote><ul><li>What does a DBMS do?<ul><li>The DBMS manages the data; the database engine allows data to be accessed, locked and modified; and the database schema defines the database\'s logical structure. These three foundational elements help provide concurrency, security, data integrity and uniform data administration procedures. The DBMS supports many typical database administration tasks, including change management, performance monitoring and tuning, security, and backup and recovery. Most database management systems are also responsible for automated rollbacks and restarts as well as logging and auditing of activity in databases and the applications that access them.</li></ul></li><li>The DBMS provides a centralized view of data that can be accessed by multiple users from multiple locations in a controlled manner. A DBMS can limit what data end users see and how they view the data, providing many views of a single database schema. End users and software programs are free from having to understand where the data is physically located or on what type of storage medium it resides because the DBMS handles all requests.</li><li>The DBMS can offer both logical and physical data independence to protect users and applications from having to know where data is stored or from being concerned about changes to the physical structure of data. So long as programs use the application programming interface (API) for the database that the DBMS provides, developers won\'t have to modify programs just because changes have been made to the database.</li></ul><p><br>&nbsp;</p>', 'Akhil', '2023-05-01', '2023-05-03', 'Ak', 'VI', 'P1', 12, 'VA', '2023-05-03', 'WA', 'VT', 'P2', 12, 'VA', '', 0, '', '', '', ''),
+(72, 'Derwing, T. M., Rossiter, M. J., & Munro, M. J. (2002)', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(73, 'Santosky v. Kramer, 455 U.S. 745 (1982)', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(74, 'Turner v. Commonwealth', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(75, 'Commonwealth v. Zamani', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(76, 'Miller-Jenkins v. Miller-Jenkins,', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(77, 'Thompson v. Thompson', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(78, 'Scott v. Rutherfoord', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(79, 'Wilson v. Gouse', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(80, 'Meade v. Meade', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(81, 'Murphy v. Woerner', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', ''),
+(82, 'Davenport v. Little-Bowser', '', '', '2023-09-22', '1970-01-01', '', '', '', 0, '', '1970-01-01', '', '', '', 0, '', '', 0, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -75,9 +91,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password_hash`, `role`) VALUES
-(1, 'asdf', 'asdf@asdf.com', '$2y$10$DWpKjTuQcI7VlggfbuD/jOcse8bETDT37SyvWXO37tsGfZ5GibajO', 2),
-(7, 'qwer', 'qwre@asdf.com', '$2y$10$PT6PWYms8hjzszZyO9kbyeeAarOKNBv561g3O13/QDtREyg7PdMT6', 1),
-(8, '1234', '1234@1234.com', '$2y$10$kmD6IGk.kWd74X6XMHzLGukhroEjRH54O5Ytlb7RQqT..I1bykT7O', 1);
+(9, 'normal', 'noraml@gmail.com', '$2y$10$jDgFvW1Cu2Zzvn6rrcvMNOitzvIaUYIMRQl1gYE1STcQg/2J.8fza', 1),
+(10, 'admin', 'admin@gmail.com', '$2y$10$YMNXe5T0HocFloXy.0ok0.0A94fgjrbMifHWh3JCc3U0U1wKN78IC', 2);
 
 --
 -- Indexes for dumped tables
@@ -104,13 +119,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
